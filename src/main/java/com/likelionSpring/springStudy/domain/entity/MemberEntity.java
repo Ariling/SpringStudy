@@ -32,9 +32,7 @@ public class MemberEntity {
         this.password = password;
         this.nickname = nickname;
     }
-    //편지함과 1대 1연결
-    @OneToOne(mappedBy = "member")
-    private BoxEntity box;
+
     private void validateNickname(){
         if(this.nickname.length()>20){
             throw  new IllegalArgumentException("닉네임은 20자 이하여야 합니다");
