@@ -23,6 +23,9 @@ public class MemberEntity {
     private String password;
     @Column(nullable = false, unique = true)
     private String nickname;
+    //편지함과 1대 1연결
+    @OneToOne(mappedBy = "member")
+    private  BoxEntity box;
 
     @Builder
 
