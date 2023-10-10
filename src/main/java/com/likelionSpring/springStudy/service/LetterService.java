@@ -22,6 +22,16 @@ public String create(LetterCreateRequest request){
         return letter.getId().toString();
         }
 
+
+//        @Transactional
+//        public String create(LetterCreateRequest request) {
+//                LetterEntity letter = letterJpaRepository.save(LetterEntity.builder()
+//                        .title(request.getTitle())
+//                        .content(request.getContent())
+//                        .build());
+//                return letter.getId().toString();
+//        }
+
 public LetterGetResponse getById(Long id){
         return LetterGetResponse.of(letterJpaRepository.findByIdOrThrow(id));
         }

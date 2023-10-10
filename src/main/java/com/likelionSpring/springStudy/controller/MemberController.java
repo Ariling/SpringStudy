@@ -1,13 +1,13 @@
 package com.likelionSpring.springStudy.controller;
 
+import com.likelionSpring.springStudy.dto.request.member.MemberSignInRequest;
 import com.likelionSpring.springStudy.dto.response.member.MemberGetResponse;
 import com.likelionSpring.springStudy.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController //알아서 json으로 바꿔주는 역할
 @RequestMapping("/api/member")
@@ -25,5 +25,11 @@ public class MemberController {
     @GetMapping("/{member_Id}")
     public ResponseEntity<MemberGetResponse> getMember(@PathVariable("member_Id") Long memberId){
         return ResponseEntity.ok(memberService.getById(memberId));
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> signIn(@RequestBody MemberSignInRequest request) {
+        URI location = URI.create("/api/member/" + memberService.create(request));
+        return ResponseEntity.created(location).build();
     }
 }

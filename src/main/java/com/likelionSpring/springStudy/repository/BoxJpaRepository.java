@@ -8,6 +8,10 @@ import java.util.Optional;
 
 public interface BoxJpaRepository extends JpaRepository<BoxEntity, Long> {
 
+    default BoxEntity findByIdOrThrow(Long id) {
+        return findById(id).orElseThrow(() -> new IllegalArgumentException("해당 박스가 존재하지 않습니다."));
+    }
+
     //code로 찾는 것인 거 같아 Id대신 code로 했습니다.
     default BoxEntity findByCodeOrThrow(String code) {
         return findByCode(code)
