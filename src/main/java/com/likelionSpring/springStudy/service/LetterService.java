@@ -2,8 +2,8 @@ package com.likelionSpring.springStudy.service;
 
 import com.likelionSpring.springStudy.domain.entity.LetterEntity;
 import com.likelionSpring.springStudy.dto.request.LetterCreateRequest;
+import com.likelionSpring.springStudy.dto.response.member.LetterGetResponse;
 import com.likelionSpring.springStudy.repository.LetterJpaRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,5 +20,9 @@ public class LetterService {
     public String create(LetterCreateRequest request){
         LetterEntity letter =  letterJpaRepository.save(LetterCreateRequest.toLetter(request.getTitle(), request.getContent()));
         return letter.getId().toString();
+    }
+
+    public LetterGetResponse getById(Long id){
+        return LetterGetResponse.of(letterJpaRepository.findByIdOrThrow(id));
     }
 }
