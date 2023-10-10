@@ -1,4 +1,4 @@
-package com.likelionSpring.springStudy.dto.response.member;
+package com.likelionSpring.springStudy.dto.response.letter;
 
 import com.likelionSpring.springStudy.domain.entity.LetterEntity;
 import lombok.AllArgsConstructor;

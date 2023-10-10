@@ -27,6 +27,8 @@ public class BoxEntity extends BaseTimeEntity {
 
     private int letterLimit = DEFAULT_LETTER_LIMIT;
 
+    private String code;
+
     //편지 연결(1대 다로 생각했는데 맞는지 모르겠어요 ㅠ)
     //뭘로 선언되어있는지 알려주는 것! 필요한 경우가 많을 때 사용
     @OneToMany(mappedBy = "box")
@@ -41,6 +43,7 @@ public class BoxEntity extends BaseTimeEntity {
     public BoxEntity(String name, int letterLimit, String code, MemberEntity member) {
         validate(letterLimit);
         this.name = name;
+        this.code = code;
         this.member = member;
     }
 

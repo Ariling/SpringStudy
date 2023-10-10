@@ -1,7 +1,7 @@
 package com.likelionSpring.springStudy.controller;
 
 import com.likelionSpring.springStudy.dto.request.LetterCreateRequest;
-import com.likelionSpring.springStudy.dto.response.member.LetterGetResponse;
+import com.likelionSpring.springStudy.dto.response.letter.LetterGetResponse;
 import com.likelionSpring.springStudy.service.LetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
