@@ -43,4 +43,13 @@ public class LetterEntity extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
+
+    //parameter가 많아도 안되고 하나의 함수에 많은게 들어가면 안된다.
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
 }
