@@ -6,13 +6,23 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED) //기본 생성자
 @Getter //알아서 getter를 만들어 준다. Setter, ToString 등등 다 되지만 Getter만 쓴다.
 @Table(name = "member")
+//@Where(clause = "is_deleted = false") //기본적으로 들어가게 하는 것
+//@SQLDelete(sql = "udate member set is_delted = true, deleted_at = now()+30 where id = ?") //jpa에서 쓸 때 실제로 시행되는 것
+//Where과 SQLDelete는 실제로 사용하지 않는다. 그 이유는 탈퇴하거나 존재하는 회원 전부 데려와야되는데 남아있는 애들만 조회가 되기 때문에
+//실제 개발을 할 때 비즈니스 요구사항이 들어왔을 때 대응이 제대로 이루어지지 않을 수 있다.
  // 그냥 선언하는 경우가 많다! (MemberEntity인 경우 그냥 class Entity로... )
 public class MemberEntity extends BaseTimeEntity {
+
+    private static final Long MEMBER_INFO_RETENTION_PERIOD = 30L; //변수로 선언하는 방식
     //Getter Setter도 Annotation을 가져와야 한다.
     //아이디 생성 전략이래 저 GeneratedValue부분이... UUID는 table id를 uuid로 할때 사용.. 웬만하면 IDENTITY인가보다
     //캡슐화 특성으로 속성을 감춘다. -> method를 이용해서 접근을 해야 된다.
@@ -36,6 +46,10 @@ public class MemberEntity extends BaseTimeEntity {
     @OneToOne(mappedBy = "member")
     private  BoxEntity box;
 
+    //삭제 시 필요한 변수들!
+    private boolean isDeleted;
+    private LocalDateTime deletedAt;
+
     @Builder
     public MemberEntity(String username, String password, String nickname) {
         this.username = username;
@@ -51,6 +65,17 @@ public class MemberEntity extends BaseTimeEntity {
         if(this.nickname.length()>20){
             throw  new IllegalArgumentException("닉네임은 20자 이하여야 합니다");
         }
+    }
+
+    //delete와 관련된 method들을 만들어준다.
+    public void softDelete() {
+        this.isDeleted = true; //DB에는 삭제가 안되었지만 삭제가 되도록 인식하게 해주는 것
+        this.deletedAt = LocalDateTime.now().plusDays(MEMBER_INFO_RETENTION_PERIOD); //30일동안 보관하도록 하는 것 plusDays라는 method가 내재되어있음
+    }
+
+    public void recover() {
+        this.isDeleted = false;
+        this.deletedAt = null;
     }
     //    private String name;
 //    //요런친구도 있네...
