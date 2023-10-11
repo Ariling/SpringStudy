@@ -23,6 +23,7 @@ public class MemberEntityTest {
                 .nickname("밍글")
                 .password("user1234")
                 .build();
+        // static 방식으로 한거를 보자 한번
         memberJpaRepository.save(member);
         //when
         MemberEntity findMember = memberJpaRepository.findById(1L).get();
