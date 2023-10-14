@@ -1,6 +1,7 @@
 package com.likelionSpring.springStudy.controller;
 
 import com.likelionSpring.springStudy.dto.request.LetterCreateRequest;
+import com.likelionSpring.springStudy.dto.request.letter.LetterUpdateRequest;
 import com.likelionSpring.springStudy.dto.response.letter.LetterGetResponse;
 import com.likelionSpring.springStudy.service.LetterService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,12 @@ public class LetterController {
     @GetMapping("/{letter_Id}")
         public ResponseEntity<LetterGetResponse> getLetter(@PathVariable("letter_Id") Long letterId) {
         return ResponseEntity.ok(letterService.getById(letterId));
+    }
+
+    @PutMapping("/{letterId}")
+    public ResponseEntity<Void> updateLetter(@PathVariable Long letterId, @RequestBody LetterUpdateRequest request) {
+        letterService.updateLetter(letterId, request);
+        return ResponseEntity.noContent().build();
     }
 
 }

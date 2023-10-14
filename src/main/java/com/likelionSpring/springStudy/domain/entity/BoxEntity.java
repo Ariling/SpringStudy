@@ -17,7 +17,7 @@ import java.util.List;
 public class BoxEntity extends BaseTimeEntity {
 
     private static final int DEFAULT_LETTER_LIMIT = 20;
-
+    //pk를 노출시키는 것은 위험한 방식! 식별자를 쓰기보다는 code라는 필드를 만들어서 이걸로 조회를 하도록 설정
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
